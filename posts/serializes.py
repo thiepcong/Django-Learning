@@ -6,7 +6,8 @@ from .models import Post
 #     title = serializers.CharField(max_length=50)
 #     content = serializers.CharField()
 #     created = serializers.DateTimeField(read_only=True)
-class PosrSerializer(serializers.ModelSerializer):
+class PostSerializer(serializers.ModelSerializer):
+    title = serializers.CharField(max_length=50)
     class Meta:
         model = Post
         fields = ['id','title','content','created']
