@@ -16,6 +16,12 @@ from .serializes import PostSerializer
 from django.shortcuts import get_object_or_404
 from accounts.serializers import CurrentUserPostsSerializer
 from .permissions import ReadOnly,AuthorOrReadOnly
+from rest_framework.pagination import PageNumberPagination
+
+class CustomPagination(PageNumberPagination):
+    page_size = 3
+    page_query_param='page'
+    page_size_query_param = 'page_size'
 
 @api_view(http_method_names=["GET","POST"])
 @permission_classes([AllowAny])
@@ -135,6 +141,7 @@ class PostListCreateView(
 
     serializer_class = PostSerializer
     permission_classes = [IsAuthenticatedOrReadOnly]
+    pagination_class = CustomPagination
     queryset = Post.objects.all()
 
     def perform_create(self, serializer):
